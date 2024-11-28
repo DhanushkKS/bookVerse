@@ -7,6 +7,7 @@
 var app = require("../app");
 var debug = require("debug")("bookverse.backend:server");
 var http = require("http");
+var https = require("https");
 const mongoose = require("mongoose");
 
 /**

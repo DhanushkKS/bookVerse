@@ -1,6 +1,10 @@
-var express = require("express");
-const { loginUser, registerUser } = require("../controllers/userController");
-var router = express.Router();
+const express = require("express");
+const {
+  loginUser,
+  registerUser,
+  signOutUser,
+} = require("../controllers/userController");
+const router = express.Router();
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -10,5 +14,8 @@ router.get("/", function (req, res, next) {
 router.post("/signIn", loginUser);
 //register
 router.post("/register", registerUser);
+
+//signOut
+router.put("/signOut", signOutUser);
 
 module.exports = router;
