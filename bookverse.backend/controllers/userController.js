@@ -17,7 +17,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const registerUser = async (req, res) => {
+const signUpUser = async (req, res) => {
   const { user } = req.body;
   try {
     const newUser = await User.registerUser(user);
@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
 };
 
 // signOut
-const signOutUser = (req, res) => {
+const logOutUser = (req, res) => {
   try {
     // Invalidate the token by simply informing the client to remove it
     res.status(200).json({ message: "User signed out successfully" });
@@ -41,6 +41,6 @@ const signOutUser = (req, res) => {
 
 module.exports = {
   loginUser,
-  registerUser,
-  signOutUser,
+  signUpUser,
+  logOutUser,
 };
