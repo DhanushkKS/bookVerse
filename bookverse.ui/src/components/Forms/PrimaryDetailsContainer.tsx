@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import Logo from "../../assets/main-logo.svg";
+import { Box, Card, CardContent, CardHeader, Typography } from "@mui/material";
 import { FormFooter } from "./FormFooter";
 
 type PrimaryDetailsContainerProps = {
@@ -51,16 +43,21 @@ export const PrimaryDetailsContainer = ({
               width="100%"
               justifyContent="center"
             >
-              <CardMedia
-                component="img"
-                image={Logo}
-                alt="logo"
-                sx={{
-                  paddingTop: "16px",
-                  maxWidth: "150px",
-                  maxHeight: "60px",
-                  objectFit: "contain",
-                }}
+              {/*TODO: Add Logo later...*/}
+              {/*<CardMedia*/}
+              {/*  component="img"*/}
+              {/*  image={Logo}*/}
+              {/*  alt="logo"*/}
+              {/*  sx={{*/}
+              {/*    border: "solid 1px",*/}
+              {/*    paddingTop: "16px",*/}
+              {/*    maxWidth: "450px",*/}
+              {/*    maxHeight: "300px",*/}
+              {/*    objectFit: "contain",*/}
+              {/*  }}*/}
+              {/*/>*/}
+              <CardHeader
+                title={<Typography variant="h2">BookVerse</Typography>}
               />
             </Box>
             <CardHeader

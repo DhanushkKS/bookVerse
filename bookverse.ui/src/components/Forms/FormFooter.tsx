@@ -58,7 +58,6 @@ export const FormFooter = ({
               to={isLogin ? "/register" : "/login"}
               variant="caption"
               underline="none"
-              color={"#fe5e7f"}
             >
               {isLogin ? "Create account" : "Sign In"}
             </Link>

@@ -14,8 +14,12 @@ export const reviewsApi = createApi({
     }),
 
     // Get reviews for a specific book
-    getReviewsByBook: builder.query<Review[], string>({
-      query: (bookId) => `${REVIEWS}?bookId=${bookId}`,
+    getReviewsByBook: builder.query<
+      Review[],
+      { bookId: string; userId: string }
+    >({
+      query: ({ bookId, userId }) =>
+        `${REVIEWS}?bookId=${bookId}&userId=${userId}`,
     }),
 
     // Add a new review

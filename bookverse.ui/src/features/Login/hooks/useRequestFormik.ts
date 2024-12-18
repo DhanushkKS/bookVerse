@@ -1,14 +1,15 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
-import generateInputField from "../../../helpers/generateInputField.jsx";
-import { useSignInMutation } from "../../../redux/auth/api.js";
-import { useEffect, useRef } from "react";
-import { useLocalStorage } from "../../../hooks/useLocalStorage.js";
 import { useNavigate } from "react-router-dom";
+import generateInputField from "../../../helpers/generateInputField.jsx";
+import { useLocalStorage } from "../../../hooks/useLocalStorage.js";
 import { validationSchema } from "../validationSchema/validationSchema.ts";
+import { useLogInMutation } from "../../../redux/auth/api.ts";
+import { LoginPayload } from "../../../redux/auth/types.ts";
+import { FieldItem } from "../../../types/types.ts";
 
 const useRequestFormik = () => {
   const navigate = useNavigate();
-  const hasNavigatedRef = useRef(false);
   const { setItem } = useLocalStorage();
   const [
     signIn,
@@ -19,8 +20,8 @@ const useRequestFormik = () => {
       data: signInData,
       isLoading,
     },
-  ] = useSignInMutation();
-  const onLoginSubmit = async (values) => {
+  ] = useLogInMutation();
+  const onLoginSubmit = async (values: LoginPayload) => {
     await signIn({ ...values });
   };
 
@@ -50,7 +51,7 @@ const useRequestFormik = () => {
       await onLoginSubmit(values);
     },
   });
-  const renderFields = (field) => {
+  const renderFields = (field: FieldItem) => {
     return generateInputField(field, formik);
   };
 

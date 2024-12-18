@@ -10,5 +10,5 @@ export const store = configureStore({
 });
 export const useDispatch = () => useReduxDispatch();
 
-export type RootState = ReturnType<typeof store.dispatch>;
+export type RootState = ReturnType<typeof store.getState>;
 export type RootDispatch = typeof store.dispatch;

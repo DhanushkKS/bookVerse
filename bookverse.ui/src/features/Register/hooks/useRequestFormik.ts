@@ -5,16 +5,18 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "../validationSchema/validationSchema.ts";
+import { RegisterPayload } from "../../../redux/auth/types.ts";
+import { FieldItem } from "../../../types/types.ts";
 
 const useRequestFormik = () => {
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage("user");
+  const { setItem } = useLocalStorage();
   const [register, { error, data, isLoading, isSuccess, isError }] =
     useRegisterMutation();
 
-  const registerOnSubmit = async (values) => {
+  const registerOnSubmit = async (values: RegisterPayload["user"]) => {
     await register({
-      user: { telephone: values.phoneNumber, ...values },
+      user: values,
     }).unwrap();
   };
   useEffect(() => {
@@ -59,7 +61,7 @@ const useRequestFormik = () => {
       }
     },
   });
-  const renderFields = (field) => {
+  const renderFields = (field: FieldItem) => {
     return generateInputField(field, formik);
   };
 
