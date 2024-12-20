@@ -13,6 +13,35 @@ const getAllReviews = async (req, res) => {
   }
 };
 
+const getReviewsByBook = async (req, res) => {
+  const { bookId } = req.query; // Get the bookId from query parameters
+
+  try {
+    // Ensure bookId is provided
+    if (!bookId) {
+      return res.status(400).json({ error: "Book ID is required" });
+    }
+
+    // Fetch reviews from the database
+    const reviews = await Review.find({ bookId })
+      .populate("bookId", "title author genre publishedYear") // Populate book details
+      .populate("userId", "firstName lastName email"); // Populate user details
+
+    // If no reviews found
+    if (reviews.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No reviews found for this book" });
+    }
+
+    // Return the reviews
+    res.status(200).json(reviews);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    res.status(500).json({ error: "Failed to fetch reviews" });
+  }
+};
+
 // Create a new review
 const createReview = async (req, res) => {
   const { bookId, userId, comment } = req.body;
@@ -38,4 +67,5 @@ const createReview = async (req, res) => {
 module.exports = {
   getAllReviews,
   createReview,
+  getReviewsByBook,
 };

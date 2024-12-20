@@ -3,6 +3,7 @@ import { useGetBookByIdQuery } from "../../../redux/books/api.ts";
 import { Book } from "../../../types/types.ts";
 import { dummyBooks } from "../common/data.ts";
 import Review from "./reviews/Review.tsx";
+import { Box } from "@mui/material";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -13,7 +14,9 @@ const BookDetails = () => {
     <>
       {book.title}
       {book.author}
-      <Review bookId={book.id} />
+      <Box sx={{ border: "solid 1px" }}>
+        <Review bookId={book.id} />
+      </Box>
     </>
   );
 };
