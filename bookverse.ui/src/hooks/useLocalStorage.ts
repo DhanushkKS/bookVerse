@@ -1,28 +1,20 @@
+import {
+  getLocalStorageItem,
+  removeLocalStorageItem,
+  setLocalStorageItem,
+} from "../utils/localStorageUtils.ts";
+
 export const useLocalStorage = () => {
   const setItem = <T>(key: string, value: T): void => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
-      console.error("Error saving to localStorage:", e);
-    }
+    setLocalStorageItem(key, value);
   };
 
   const getItem = <T>(key: string): T | undefined => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : undefined;
-    } catch (e) {
-      console.error("Error reading from localStorage:", e);
-      return undefined;
-    }
+    return getLocalStorageItem<T>(key);
   };
 
   const removeItem = (key: string): void => {
-    try {
-      window.localStorage.removeItem(key);
-    } catch (e) {
-      console.error("Error removing from localStorage:", e);
-    }
+    removeLocalStorageItem(key);
   };
 
   return { setItem, getItem, removeItem };

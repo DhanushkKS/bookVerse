@@ -4,6 +4,7 @@ export type LoginPayload = {
 };
 
 export type LoginResponse = {
+  id: string;
   email: string;
   token: string;
 };
@@ -19,7 +20,7 @@ export type RegisterPayload = {
 
 export type RegisterResponse = {
   newUser: {
-    _id: string;
+    id: string;
     firstName: string;
     lastName: string;
     email: string;

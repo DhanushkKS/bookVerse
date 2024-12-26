@@ -6,11 +6,9 @@ export const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]{10}$/, "Phone Number must be 10 digits")
-    .required("Phone Number is required"),
+
   password: Yup.string().required("Password is required"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Confirm Password is required"),
 });

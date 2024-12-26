@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { validationSchema } from "../validationSchema/validationSchema.ts";
 import { RegisterPayload } from "../../../redux/auth/types.ts";
 import { FieldItem } from "../../../types/types.ts";
+import { useDispatch } from "../../../store";
+import { setUser } from "../../../redux/useSlice.ts";
 
 const useRequestFormik = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { setItem } = useLocalStorage();
   const [register, { error, data, isLoading, isSuccess, isError }] =
     useRegisterMutation();
@@ -21,7 +24,12 @@ const useRequestFormik = () => {
   };
   useEffect(() => {
     if (data?.token) {
-      setItem("user", data);
+      dispatch(
+        setUser({
+          token: data?.token,
+          userInfo: { email: data?.newUser.email, id: data?.newUser?.id },
+        }),
+      );
     }
     if (isError) {
       console.log(error);
@@ -31,17 +39,14 @@ const useRequestFormik = () => {
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
-      window.location.reload();
     }
   }, [isSuccess, navigate]);
 
   const formik = useFormik({
     initialValues: {
-      //
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
     },

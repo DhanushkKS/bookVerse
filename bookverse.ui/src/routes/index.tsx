@@ -11,9 +11,9 @@ import {
 
 export const useRouteObject = (): RouteObject[] => {
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
-
+  console.log(isAuthenticated);
   return [
-    // { path: "/", element: isAuthenticated ? <>Home..</> : <LoginPage /> },
+    { path: "/", element: isAuthenticated ? <>Home..</> : <LoginPage /> },
     // Login and Register routes
     {
       path: "/login",

@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import generateInputField from "../../../helpers/generateInputField.jsx";
-import { useLocalStorage } from "../../../hooks/useLocalStorage.js";
 import { validationSchema } from "../validationSchema/validationSchema.ts";
 import { useLogInMutation } from "../../../redux/auth/api.ts";
 import { LoginPayload } from "../../../redux/auth/types.ts";
 import { FieldItem } from "../../../types/types.ts";
+import { useDispatch } from "../../../store";
+import { setUser } from "../../../redux/useSlice.ts";
 
 const useRequestFormik = () => {
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage();
+  const dispatch = useDispatch();
   const [
     signIn,
     {
@@ -27,18 +28,26 @@ const useRequestFormik = () => {
 
   useEffect(() => {
     if (signInData && signInData?.token) {
-      setItem("user", signInData);
+      // setItem("user", signInData);
+      dispatch(
+        setUser({
+          token: signInData?.token,
+          userInfo: {
+            id: signInData?.id,
+            email: signInData?.email,
+          },
+        }),
+      );
     }
     if (signInIsError) {
       console.log(signInError);
     }
-  }, [signInData, signInIsError, signInError, setItem, isLoading]);
+  }, [signInData, signInIsError, signInError, isLoading, dispatch]);
 
   useEffect(() => {
     if (signInIsSuccess) {
       console.log("signIn success", signInIsSuccess);
       navigate("/");
-      window.location.reload(); //for now
     }
   }, [signInIsSuccess, navigate]);
   const formik = useFormik({
