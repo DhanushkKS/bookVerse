@@ -1,4 +1,5 @@
 import { getLocalStorageItem } from "./localStorageUtils.ts";
+
 type UserInfo = {
   token: string;
   userInfo: {

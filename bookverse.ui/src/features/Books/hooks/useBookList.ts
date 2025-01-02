@@ -1,6 +1,5 @@
 import { useGetBooksQuery } from "../../../redux/books/api.ts";
 import { Book } from "../../../types/types.ts";
-import { dummyBooks } from "../common/data.ts";
 import { useLocalStorage } from "../../../hooks/useLocalStorage.ts";
 
 type UserInfo = {

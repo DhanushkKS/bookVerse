@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetBookByIdQuery } from "../../../redux/books/api.ts";
 import { Book } from "../../../types/types.ts";
 import Review from "./reviews/Review.tsx";
-import { Box, Typography, Card, CardContent, Divider } from "@mui/material";
+import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 const BookDetails = () => {
   const { id } = useParams();
