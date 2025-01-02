@@ -35,12 +35,17 @@ const ReviewFormContainer = ({
         component="div"
         display="flex"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="start"
+        // sx={{ border: "solid 1px" }}
       >
         <form onSubmit={onSubmit}>
           <Card
-            sx={{ border: "solid 1px", padding: "32px", borderRadius: "20px" }}
-            elevation={5}
+            sx={{
+              width: "100%",
+              // border: "solid 1px",
+              padding: "32px",
+              borderRadius: "10px",
+            }}
           >
             <Box
               component={"div"}

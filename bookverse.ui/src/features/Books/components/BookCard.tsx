@@ -2,6 +2,7 @@ import {
   Box,
   Card,
   CardContent,
+  CardMedia,
   Stack,
   Tooltip,
   Typography,
@@ -17,68 +18,78 @@ const BookCard = ({ book }: BookCardProps) => {
   const { bookTitle, fullBookTitle } = useBookCard(book);
 
   return (
-    <Box m={1} pr={0.5} my={2}>
+    <Box m={2}>
       <Card
         sx={{
           width: 200,
-          minHeight: 250,
+          minHeight: 300,
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: 2,
+          boxShadow: 3,
+          transition: "transform 0.2s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.05)",
+            boxShadow: 6,
+          },
         }}
       >
+        {/* Optional Image */}
         {/*<CardMedia*/}
-        {/*  sx={{ height: 140, width: 200 }}*/}
-        {/*  image={recipe?.strMealThumb || recipe?.image}*/}
-        {/*  title={recipeTitle}*/}
+        {/*  component="img"*/}
+        {/*  height="140"*/}
+        {/*  image={book.coverImage || "/default-book-cover.jpg"} // Fallback image*/}
+        {/*  alt={bookTitle}*/}
+        {/*  sx={{*/}
+        {/*    borderRadius: "4px 4px 0 0",*/}
+        {/*  }}*/}
         {/*/>*/}
 
-        <CardContent sx={{ pl: 1, border: "solid 1px" }}>
+        <CardContent>
+          {/* Genre and Details */}
           <Stack direction="row" spacing={1} mb={1} alignItems="center">
             <Typography
               variant="caption"
-              component="div"
-              textTransform="uppercase"
+              color="text.secondary"
+              sx={{ textTransform: "uppercase", fontWeight: 500 }}
             >
               {book.genre}
             </Typography>
-            {/*<IconButton*/}
-            {/*  size="small"*/}
-            {/*  color="primary"*/}
-            {/*  cursor="pointer"*/}
-            {/*  onClick={handleClick}*/}
-            {/*  disabled={favourites || isLoading}*/}
-            {/*>*/}
-            {/*  {isFavourite || favourites ? (*/}
-            {/*    <Favorite fontSize="small" />*/}
-            {/*  ) : (*/}
-            {/*    <FavoriteBorder fontSize="small" />*/}
-            {/*  )}*/}
-            {/*</IconButton>*/}
           </Stack>
 
+          {/* Book Title with Tooltip */}
           <Tooltip title={fullBookTitle}>
             <Typography
-              variant="body2"
-              component="div"
+              variant="body1"
               fontWeight="600"
-              fontSize="0.8rem"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               {bookTitle}
             </Typography>
           </Tooltip>
+
+          {/* Author */}
           <Typography
-            variant="body1"
-            component="div"
-            fontWeight="600"
-            fontSize="0.8rem"
+            variant="body2"
+            color="text.secondary"
+            fontWeight="500"
+            mt={0.5}
           >
-            {book.author}
+            by {book.author}
           </Typography>
+
+          {/* Published Year */}
           <Typography
-            variant="body1"
-            component="div"
-            fontWeight="600"
-            fontSize="0.8rem"
+            variant="body2"
+            color="text.secondary"
+            mt={1}
+            fontSize="0.85rem"
           >
-            {book.publishedYear}
+            Published: {book.publishedYear}
           </Typography>
         </CardContent>
       </Card>

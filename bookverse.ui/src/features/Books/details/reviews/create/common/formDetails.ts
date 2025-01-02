@@ -11,6 +11,6 @@ export const addReviewFormDetails: FormField[] = [
     required: true,
     xs: 12,
     sm: 12,
-    md: 6,
+    md: 12,
   },
 ];

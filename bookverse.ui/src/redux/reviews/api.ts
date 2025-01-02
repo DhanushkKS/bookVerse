@@ -4,18 +4,22 @@ import { HTTP_METHODS } from "../../constants";
 import { REVIEWS } from "../../helpers/url";
 import { Review } from "./types";
 
+const TAGS = { REVIEWS: "REVIEWS", REVIEW: "REVIEW" };
 export const reviewsApi = createApi({
   reducerPath: "reviewsApi",
   baseQuery,
+  tagTypes: [TAGS.REVIEW, TAGS.REVIEWS],
   endpoints: (builder) => ({
     // Get all reviews
     getReviews: builder.query<Review[], void>({
       query: () => `${REVIEWS}/`,
+      providesTags: [TAGS.REVIEWS],
     }),
 
     // Get reviews for a specific book
     getReviewsByBook: builder.query<Review[], { bookId: string }>({
       query: ({ bookId }) => `${REVIEWS}?id=${bookId}`,
+      providesTags: [TAGS.REVIEWS],
     }),
 
     // Add a new review
@@ -25,6 +29,7 @@ export const reviewsApi = createApi({
         method: `${HTTP_METHODS.POST}`,
         body: review,
       }),
+      invalidatesTags: [TAGS.REVIEW, TAGS.REVIEWS],
     }),
 
     // Delete a review by ID
@@ -33,6 +38,7 @@ export const reviewsApi = createApi({
         url: `${REVIEWS}/${reviewId}`,
         method: `${HTTP_METHODS.DELETE}`,
       }),
+      invalidatesTags: [TAGS.REVIEW],
     }),
   }),
 });
