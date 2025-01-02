@@ -3,13 +3,26 @@ const Book = require("../models/bookModel");
 // Get all books
 const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find().populate(
+    const { userId } = req.query; // Extract userId from query parameters
+
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is required" }); // Validate input
+    }
+
+    // Fetch books created by the relevant user
+    const books = await Book.find({ createdBy: userId }).populate(
       "createdBy",
       "firstName lastName email",
     );
-    res.status(200).json(books);
+
+    if (books.length === 0) {
+      return res.status(404).json({ message: "No books found for this user" }); // Handle no books found
+    }
+
+    res.status(200).json(books); // Return books for the given user
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch books" });
+    console.error("Error fetching books:", error);
+    res.status(500).json({ error: "Failed to fetch books" }); // Handle server errors
   }
 };
 
@@ -32,19 +45,16 @@ const getBookById = async (req, res) => {
 
 // Create a new book
 const createBook = async (req, res) => {
-  const { title, author, genre, publishedYear } = req.body;
+  const { title, author, genre, publishedYear, createdBy } = req.body;
 
   try {
-    const book = await Book.create(
-      {
-        title,
-        author,
-        genre,
-        publishedYear,
-        createdBy: req.user.id,
-      },
-      {},
-    );
+    const book = await Book.create({
+      title,
+      author,
+      genre,
+      publishedYear,
+      createdBy,
+    });
     res.status(201).json({ message: "Book added successfully", book });
   } catch (error) {
     res.status(400).json({ error: "Failed to add the book" });

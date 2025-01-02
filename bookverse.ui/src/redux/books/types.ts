@@ -6,3 +6,4 @@ export type Book = {
   publishedYear: string;
   createdBy: string;
 };
+export type CreateBookPayload = Omit<Book, "id">;

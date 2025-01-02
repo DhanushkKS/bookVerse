@@ -1,33 +1,42 @@
 import { useFormik } from "formik";
 import { useAddBookMutation } from "../../../../redux/books/api.ts";
-import { Book } from "../../../../redux/books/types.ts";
+import { CreateBookPayload } from "../../../../redux/books/types.ts";
 import { FieldItem } from "../../../../types/types.ts";
 import generateInputField from "../../../../helpers/generateInputField.tsx";
+import { useLocalStorage } from "../../../../hooks/useLocalStorage.ts";
+import { useNavigate } from "react-router-dom";
 
+type UserInfo = {
+  token: string;
+  userInfo: {
+    email: string;
+    id: string;
+  };
+};
 const useRequestFormik = () => {
-  // const navigate = useNavigate();
-  const [
-    addBook,
-    {
-      // isError: signInIsError,
-      // error: signInError,
-      // isSuccess: signInIsSuccess,
-      // data: signInData,
-      isLoading,
-    },
-  ] = useAddBookMutation();
-  const onAddBookSubmit = async (values: Book) => {
-    await addBook({ ...values });
+  const navigate = useNavigate();
+  const { getItem } = useLocalStorage();
+  const userData = getItem<UserInfo>("user");
+  const userId = userData?.userInfo.id.toString();
+  const [addBook, { isLoading }] = useAddBookMutation();
+  const onAddBookSubmit = async (
+    values: Omit<CreateBookPayload, "createdBy">,
+  ) => {
+    if (!userId) {
+      console.error("User ID is not available in local storage.");
+      return;
+    }
+    const bookData: CreateBookPayload = { ...values, createdBy: userId };
+    await addBook(bookData);
+    await navigate("/books");
   };
 
   const formik = useFormik({
     initialValues: {
-      id: "",
       title: "",
       author: "",
       genre: "",
       publishedYear: "",
-      createdBy: "",
     },
     // validationSchema: validationSchema,
     onSubmit: async (values) => {

@@ -1,7 +1,7 @@
 import useReview from "./useReview.ts";
 import ReviewForm from "./create";
 
-const Review = ({ bookId }) => {
+const Review = ({ bookId }: { bookId: string }) => {
   const { reviews } = useReview(bookId);
   return (
     <div>

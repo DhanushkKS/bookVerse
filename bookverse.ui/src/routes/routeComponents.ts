@@ -6,4 +6,5 @@ export const RegisterPage = lazy(
 );
 
 export const BookListPage = lazy(() => import("../pages/Books/index.tsx"));
+export const BookCreatePage = lazy(() => import("../pages/Books/create"));
 export const BookDetailsPage = lazy(() => import("../pages/Books/details"));

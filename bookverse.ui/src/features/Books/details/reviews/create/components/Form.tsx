@@ -9,10 +9,18 @@ type FormProps = {
   columns?: number;
   isLogin?: boolean;
   fullWidth?: boolean;
+  bookId: string;
 };
 
-const Form = ({ columns, isLogin, title, width, fullWidth }: FormProps) => {
-  const { renderFields, handleSubmit, isLoading } = useRequestFormik();
+const Form = ({
+  columns,
+  isLogin,
+  title,
+  width,
+  fullWidth,
+  bookId,
+}: FormProps) => {
+  const { renderFields, handleSubmit, isLoading } = useRequestFormik(bookId);
 
   return (
     <ReviewFormContainer

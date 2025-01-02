@@ -4,9 +4,10 @@ import { Book } from "../../../types/types.ts";
 import { Link as RouterLink } from "react-router-dom";
 
 import React from "react";
+import { Add } from "@mui/icons-material";
 
 type BooksPanelProps = {
-  books: Book[] | Omit<Book, "id">[];
+  books: Book[];
   favourites?: boolean;
   category?: string;
 };
@@ -19,9 +20,12 @@ const BooksPanel = ({ books }: BooksPanelProps) => {
       flexWrap="wrap"
       justifyContent="flex-start"
     >
-      {books.map((book, index) => (
+      <Link component={RouterLink} to={`/books/create`}>
+        <Add />
+      </Link>
+      {books?.map((book, index) => (
         <React.Fragment key={index}>
-          <Link component={RouterLink} to={`${book?.id ?? "bookId"}`}>
+          <Link component={RouterLink} to={`/books/${book?._id ?? "bookId"}`}>
             <BookCard book={book} />
           </Link>
         </React.Fragment>

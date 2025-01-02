@@ -2,14 +2,17 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../apiService.js";
 import { HTTP_METHODS } from "../../constants.ts";
 import { BOOKS } from "../../helpers/url.ts";
-import { Book } from "./types.ts";
+import { Book, CreateBookPayload } from "./types.ts";
 
 export const booksApi = createApi({
   reducerPath: "booksApi",
   baseQuery,
   endpoints: (builder) => ({
-    getBooks: builder.query<Book[], void>({
-      query: () => `${BOOKS}/,`,
+    getBooks: builder.query<Book[], { userId?: string }>({
+      query: ({ userId } = {}) => {
+        const queryParam = userId ? `?userId=${userId}` : "";
+        return `${BOOKS}/${queryParam}`;
+      },
     }),
 
     // Fetch a single book by ID
@@ -17,7 +20,7 @@ export const booksApi = createApi({
       query: (id) => `${BOOKS}/${id}`,
     }),
 
-    addBook: builder.mutation<Book, Partial<Book>>({
+    addBook: builder.mutation<Book, CreateBookPayload>({
       query: (book) => ({
         url: `${BOOKS}`,
         method: `${HTTP_METHODS.POST}`,

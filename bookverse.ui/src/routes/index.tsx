@@ -2,6 +2,7 @@ import { Navigate, RouteObject } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import {
+  BookCreatePage,
   BookDetailsPage,
   BookListPage,
   LoginPage,
@@ -13,7 +14,10 @@ export const useRouteObject = (): RouteObject[] => {
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
   console.log(isAuthenticated);
   return [
-    { path: "/", element: isAuthenticated ? <>Home..</> : <LoginPage /> },
+    {
+      path: "/",
+      element: isAuthenticated ? <Navigate to="/books" /> : <LoginPage />,
+    },
     // Login and Register routes
     {
       path: "/login",
@@ -29,6 +33,7 @@ export const useRouteObject = (): RouteObject[] => {
       // element: <ProtectedRoute />,
       children: [
         { index: true, element: <BookListPage /> },
+        { path: "create", element: <BookCreatePage /> },
         { path: ":id", element: <BookDetailsPage /> },
       ],
     },

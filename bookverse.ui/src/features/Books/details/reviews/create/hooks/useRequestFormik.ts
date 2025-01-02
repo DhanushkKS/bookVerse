@@ -3,11 +3,13 @@ import { useAddReviewMutation } from "../../../../../../redux/reviews/api.ts";
 import { Review } from "../../../../../../redux/reviews/types.ts";
 import { FieldItem } from "../../../../../../types/types.ts";
 import generateInputField from "../../../../../../helpers/generateInputField.tsx";
+import { getUserId } from "../../../../../../utils/getUserId.ts";
 
-const useRequestFormik = () => {
+const useRequestFormik = (bookId: string) => {
   const [addReview, { isLoading }] = useAddReviewMutation();
+  const userId = getUserId();
   const onAddReviewSubmit = async (values: Partial<Review>) => {
-    await addReview({ ...values });
+    await addReview({ ...values, bookId, userId });
   };
 
   const formik = useFormik({

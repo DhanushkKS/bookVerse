@@ -1,2 +1,2 @@
-export const generateUniqueKey = (prefix) =>
+export const generateUniqueKey = (prefix: string) =>
   `${prefix}_${new Date().getTime()}`;

@@ -5,7 +5,7 @@ import { INPUT_TYPES } from "../../../../../../constants.ts";
 export const addReviewFormDetails: FormField[] = [
   {
     key: generateUniqueKey("review"),
-    name: "review",
+    name: "comment",
     label: "Add review",
     type: INPUT_TYPES.TEXT,
     required: true,

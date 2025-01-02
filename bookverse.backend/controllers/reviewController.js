@@ -14,16 +14,16 @@ const getAllReviews = async (req, res) => {
 };
 
 const getReviewsByBook = async (req, res) => {
-  const { bookId } = req.query; // Get the bookId from query parameters
+  const { id } = req.query; // Get the bookId from query parameters
 
   try {
     // Ensure bookId is provided
-    if (!bookId) {
+    if (!id) {
       return res.status(400).json({ error: "Book ID is required" });
     }
 
     // Fetch reviews from the database
-    const reviews = await Review.find({ bookId })
+    const reviews = await Review.find({ bookId: id })
       .populate("bookId", "title author genre publishedYear") // Populate book details
       .populate("userId", "firstName lastName email"); // Populate user details
 

@@ -1,9 +1,12 @@
 import Form from "./components/Form.tsx";
 
-const ReviewForm = ({ bookId }) => {
+type ReviewFormProps = {
+  bookId: string;
+};
+const ReviewForm = ({ bookId }: ReviewFormProps) => {
   return (
     <>
-      <Form columns={6} title="Add Review" width={"50%"} />
+      <Form columns={6} title="Add Review" width={"50%"} bookId={bookId} />
     </>
   );
 };

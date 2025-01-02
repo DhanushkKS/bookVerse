@@ -10,7 +10,7 @@ type FormProps = {
   isLogin?: boolean;
   fullWidth?: boolean;
 };
-
+// todo: Need to update/or create new primary details container for use non auth forms
 const Form = ({ columns, isLogin, title, width, fullWidth }: FormProps) => {
   const { renderFields, handleSubmit, isLoading } = useRequestFormik();
 
@@ -18,7 +18,7 @@ const Form = ({ columns, isLogin, title, width, fullWidth }: FormProps) => {
     <PrimaryDetailsContainer
       title={title}
       width={width}
-      isLogin={isLogin}
+      isLogin={false}
       columns={columns}
       onSubmit={handleSubmit}
       fullWidth={fullWidth}
